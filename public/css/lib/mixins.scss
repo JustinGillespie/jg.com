@@ -1,0 +1,96 @@
+
+/* ==========================================================================
+   Mixins
+   ========================================================================== */
+
+@mixin animation($props) {
+  -webkit-animation: $props;
+     -moz-animation: $props;
+       -o-animation: $props;
+      -ms-animation: $props;
+          animation: $props;
+}
+
+@mixin break($props) {
+  @media ($props) { @content; }
+}
+
+@mixin break-max($size) {
+  @media (max-width: $size) { @content; }
+}
+
+@mixin break-min($size) {
+  @media (min-width: $size) { @content; }
+}
+
+@mixin circle($radius) {
+  text-align: center;
+  height: $radius;
+  width: $radius;
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+       -o-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin clear {
+  *zoom: 1;
+  &:before { content: " "; display: table; }
+  &:after { clear: both; content: " "; display: table; }
+}
+
+@mixin font($style: 'regular') {
+  font-family: 'pn_#{$style}', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li { margin: 0; padding: 0; }
+}
+
+@mixin rounded($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+       -o-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin shadow($props) {
+  -webkit-box-shadow: $props;
+     -moz-box-shadow: $props;
+          box-shadow: $props;
+}
+
+@mixin text-select {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+}
+
+@mixin text-size-adjust($amount) {
+  -webkit-text-size-adjust: $amount;
+      -ms-text-size-adjust: $amount;
+}
+
+@mixin transition($props) {
+  -webkit-transition: $props;
+     -moz-transition: $props;
+      -ms-transition: $props;
+       -o-transition: $props;
+          transition: $props;
+}
+
+@mixin transparent($amount) {
+	$ie: $amount * 100;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + $ie + ")";
+	filter: alpha(opacity=$ie);
+	-webkit-opacity: $amount;
+	-moz-opacity: $amount;
+	opacity: $amount;
+}

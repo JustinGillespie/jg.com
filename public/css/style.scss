@@ -1,0 +1,696 @@
+
+@import "lib/fonts";
+@import "lib/mixins";
+@import "lib/helpers";
+@import "lib/grids";
+@import "lib/animations";
+@import "lib/print";
+
+$mobile: 860px;
+
+/* ==========================================================================
+   Colors
+   ========================================================================== */
+
+
+$textColor: #f5f5f5;
+$selectionColor: #b3d4fc;
+
+$blue: #70b0e2;
+$green: #B2D36F;
+$prpl: #8882c8;
+$orange: #e3ae69;
+
+.blue     { color: $blue; }
+.blue a   { color: $blue; }
+.green    { color: $green; }
+.green a  { color: $green; }
+.prpl     { color: $prpl; }
+.prpl a   { color: $prpl; }
+.orange   { color: $orange; }
+.orange a { color: $orange; }
+
+
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main,
+nav, section, summary { display: block; }
+
+audio, canvas, video { display: inline-block; }
+audio:not([controls]) { display: none; height: 0; }
+
+[hidden] { display: none; }
+
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+html {
+    @include font();
+    @include text-size-adjust(100%);
+    background: url('../img/bg.png') repeat #2c2827;
+    color: $textColor;
+}
+
+body { font-size: 1em; line-height: 1.4; margin: 0; -webkit-text-size-adjust: none; }
+
+button, input, select, textarea { color: $textColor; }
+
+::-moz-selection { background: $selectionColor; text-shadow: none; }
+::selection { background: $selectionColor; text-shadow: none; }
+
+
+/* ==========================================================================
+   Architecture
+   ========================================================================== */
+
+
+.container { display: table-cell; text-align: center; position: relative; vertical-align: middle; }
+
+header {
+  @include clear;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  font-weight: normal;
+  letter-spacing: 0.2em;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 8000;
+  opacity: 0.9;
+
+  .mail, .primary { float: left; display: block; @include break-max($mobile) { display: none; } }
+  .primary { margin-top: 5px; }
+
+  a { color: white; display: inline-block; text-decoration: none; margin-right: 20px; }
+  i { font-size: 1.6em; }
+}
+
+
+
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+h1, h2, h3 {
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  @include font('light');
+  font-size: 2.3em;
+  em { @include font('bold'); font-style: normal; }
+  @include break-max($mobile) { font-size: 1.7em; }
+}
+
+h2 {
+  @include font('bold');
+  font-size: 1.9em;
+  padding-bottom: 50px;
+  @include break-max($mobile) { font-size: 1.3em; }
+}
+
+abbr[title] { border-bottom: 1px dotted; }
+b, strong { font-weight: bold; }
+dfn { font-style: italic; }
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+mark { background: #ff0; color: #000; }
+
+code, kbd, pre, samp { font-family: monospace, serif; font-size: 1em; }
+
+pre { white-space: pre-wrap; }
+
+q { quotes: "\201C" "\201D" "\2018" "\2019"; }
+
+small { font-size: 80%; }
+
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+
+.styled {
+  @include font('bold');
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  font-size: 0.9em;
+}
+
+a:focus { outline: thin dotted; }
+a:active, a:hover { outline: 0; }
+
+
+/* ==========================================================================
+   Stages
+   ========================================================================== */
+
+
+.stage {
+  display: table;
+  text-align: center;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  @include break-max('700px') {
+    height: auto;
+    min-height: 480px;
+  }
+}
+
+// Intro Stage
+
+.intro {
+  background: url('../img/devices.png') center center no-repeat;
+  z-index: 100;
+
+}
+
+// Project Stage
+
+.create {
+  background: url('../img/bg-prpl.png') repeat $prpl;
+  z-index: 200;
+  h2 { padding-bottom: 0px; }
+  p  { padding-top: 0px; }
+  @include break-max($mobile) {
+    display: block !important;
+    padding-top: 60px;
+  }
+}
+
+// Slider
+
+$sliderNavOffset: 500px;
+
+$sliderTextTopMargin: 25px;
+$sliderTextLeftMargin: -405px;
+
+$sliderWidth: 100%;
+$sliderHeight: 340px;
+
+
+.project-wrap {
+  position: relative;
+  margin: 85px auto 35px auto;
+
+  &:before {
+    content: 'Swipe for more projects →' ;
+    font-family: arial;
+    font-size: 0.8em;
+    display: none;
+    text-align: center;
+    letter-spacing: 0.1em;
+    margin: 10px auto;
+  }
+
+  @include break-max($mobile) {
+    margin: 50px auto 35px auto;
+    &:before { display: block; }
+  }
+}
+
+.projects, .projects .slide {
+  height: $sliderHeight;
+  width: $sliderWidth;
+  @include break-max($mobile) { height: 310px !important }
+}
+
+.projects {
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+
+  .slider { width: 100%; height: 100%; }
+  .slide  { margin: 0; padding: 0; list-style: none; float: left; }
+}
+
+.projects h2, .projects p, .projects .slide ul, .projects .link {
+  left: 50%;
+  margin-left: $sliderTextLeftMargin;
+  position: absolute;
+  width: 350px;
+  @include break-max(960px ) { left: 70px; margin-left: 0; width: 350px; }
+  @include break-max($mobile ) {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    position: static !important;
+    width: 100% !important;
+  }
+}
+
+.projects h2 {
+  color: $green;
+  font-size: 1.5em;
+  top: 0px + $sliderTextTopMargin;
+  white-space: nowrap;
+  @include break-max(960px ) { top: 0; }
+  @include break-max($mobile) { margin-top: 20px; top: auto; }
+}
+
+.projects .slide ul {
+  @include list;
+  top: 50px + $sliderTextTopMargin;
+  margin-left: $sliderTextLeftMargin;
+  @include break-max(960px ) { top: 50px; left: 70px; margin-left: 0}
+  @include break-max($mobile) { top: auto; margin: 15px 0; }
+
+}
+
+.projects .slide ul li {
+  font-family: arial;
+  font-size: 0.8em;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 5px;
+  @include break-max($mobile ) { display: inline-block; margin: 0 5px; }
+
+}
+
+.projects p {
+  top: 100px + $sliderTextTopMargin;
+  @include break-max(960px) { top: 100px }
+  @include break-max($mobile) { display: none; }
+}
+
+.projects .link {
+  @include font('bold');
+  @include transition(all 0.3s linear);
+
+  background: darken($prpl, 10%);
+  color: white;
+  font-size: 0.7em;
+  letter-spacing: 0.1em;
+  padding: 12px 10px 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  top: 220px + $sliderTextTopMargin;
+  width: 150px;
+
+  &:hover { background: darken($prpl, 15%); }
+  @include break-max(960px) { top: 220px }
+  @include break-max($mobile) { display: none; }
+}
+
+.projects img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
+  @include break-max(960px ) { left: auto; right: 70px; width: 340px; }
+  @include break-max($mobile ) {
+    left: auto;
+    right: auto;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    width: 250px;
+  }
+}
+
+// Controls
+
+.prev-project, .next-project,
+.project-controls  { @include text-select; }
+
+.prev-project, .next-project {
+  @include circle(35px);
+  @include font('bold');
+  @include transition(all 0.3s linear);
+
+  background: darken($prpl, 10%);
+  color: lighten($prpl, 20%);
+  display: block;
+  opacity: 0;
+  padding-top: 7px;
+  position: absolute;
+  top: 115px;
+  z-index: 1000;
+
+  &:hover { background: darken($prpl, 20%); }
+}
+
+.project-wrap:hover .prev-project,
+.project-wrap:hover .next-project {
+  opacity: 1;
+}
+
+.prev-project {
+  left: 50%;
+  margin-left: -$sliderNavOffset;
+  @include break-max(1025px) { left: 15px; margin-left: 0; }
+  @include break-max(960px ) { display: none; }
+
+}
+
+.next-project {
+  right: 50%;
+  margin-right: -$sliderNavOffset;
+  @include break-max(1025px) { right: 15px; margin-right: 0; }
+  @include break-max(960px ) { display: none; }
+}
+
+.project-controls a {
+  display: inline-block;
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: darken($prpl, 10%);
+  margin: 3px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.1) inset, 1px 1px 1px rgba(255,255,255,0.1);
+  @include break-max($mobile) { height: 22px; width: 22px; }
+}
+
+.project-controls a.active:after {
+  content: '';
+  width: 11px;
+  height: 11px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 50%;
+  background: darken($prpl, 20%);
+  @include break-max($mobile) { height: 21px; width: 21px; }
+}
+
+
+// Process
+
+.process {
+  background: $blue;
+  z-index: 300;
+
+  h1 { padding-bottom: 40px; }
+  a  { color: darken(#70b0e2, 20%) !important; }
+  @include break-max($mobile) {
+    display: block !important;
+    padding-top: 60px;
+  }
+}
+
+.process .link {
+  @include font('bold');
+  @include transition(all 0.3s linear);
+
+  background: darken($blue, 10%);
+  color: white !important;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  display: inline-block;
+  padding: 12px 10px 10px 10px;
+  margin: 0 4px;
+  text-align: center;
+  width: 150px;
+
+  &:hover, &.active {
+    background: darken($blue, 20%);
+    @include break-max($mobile) { background: white; border: 1px solid white; color: $blue !important; }
+  }
+
+  @include break-max($mobile) {
+    background: none;
+    border: 1px solid darken($blue, 10%);
+    margin: 5px;
+    width: 145px;
+  }
+}
+
+.process .row {
+  margin: 70px auto 0 auto;
+  max-width: 720px;
+  @include break-max($mobile) { margin: 20px auto 0 auto; }
+}
+
+.process .row .columns {
+  @include break-max($mobile) { float: none; width: 100%; }
+}
+
+.process .toolbox {
+  position: relative;
+  height: 131px;
+  width: 157px;
+  margin: 0 auto 40px auto;
+
+  @include break-max($mobile) {
+    height: 85px;
+    width: 102px;
+  }
+
+  .tool {
+    background: url('../img/tool.png') no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 131px;
+    width: 157px;
+    @include break-max($mobile) {
+      background-size: 102px 85px;
+      height: 85px;
+      width: 102px;
+    }
+  }
+
+  .bolt {
+    @include animation(rotate 4s linear 0s infinite normal);
+    background: url('../img/bolt.png') no-repeat;
+    position: absolute;
+    top: 20px;
+    right: 5px;
+    height: 33px;
+    width: 33px;
+    @include break-max($mobile) {
+      background-size: 21px 21px;
+      height: 21px;
+      width: 21px;
+      top: 11px;
+      right: -1px;
+    }
+  }
+}
+
+.process .toolset {
+  list-style: none;
+  margin: 25px auto;
+  max-width: 300px;
+  padding: 0;
+
+  li {
+    @include rounded(5px);
+    @include font('regular');
+    background: darken(#70b0e2, 8%);
+    color: lighten(#70b0e2, 26%);
+    font-size: 0.750em;
+    letter-spacing: 0.1em;
+    padding: 10px;
+    text-align: right;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    overflow: hidden;
+
+    &.one   { width: 10%; }
+    &.two   { width: 20%; }
+    &.three { width: 30%; }
+    &.four  { width: 40%; }
+    &.five  { width: 50%; }
+    &.six   { width: 60%; }
+    &.seven { width: 70%; }
+    &.eight { width: 80%; }
+    &.nine  { width: 90%; }
+    &.ten   { width: 100%; }
+  }
+
+  @include break-max($mobile) { margin-bottom: 60px; }
+}
+
+.process .description {
+  text-align: left;
+  @include break-max($mobile) { display: none; }
+}
+
+.process h3 { margin-top: 25px; }
+
+// Social
+
+.social {
+  background: url('../img/bg-pixels.png') repeat white;
+  color: #666;
+  z-index: 500;
+
+  a { text-decoration: none; }
+  a.styled {
+    color: #ccc;
+    display: inline-block;
+    margin-top: 75px;
+    @include break-max($mobile) { margin-top: 15px; }
+  }
+}
+
+.social .container {
+  @include clear;
+  @include break-max($mobile) { width: 100%; }
+}
+
+.icon-block {
+  display: inline-block;
+  text-align: center;
+  margin: 0 50px;
+
+  @include break-max($mobile) {
+    height: 140px;
+    float: left;
+    margin: 0;
+    width: 50%;
+  }
+}
+
+.social i {
+  @include transition(all .3s linear);
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+
+  &:hover {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
+
+i.twitter {
+  background: url('../img/icon-twitter.png') no-repeat 0 0;
+  display: block;
+  height: 48px;
+  margin: 0 auto 50px auto;
+  width: 58px;
+  @include break-max($mobile) { margin: 0 auto 12px auto; }
+}
+
+i.lastfm {
+  background: url('../img/icon-lastfm.png') no-repeat 0 0;
+  display: block;
+  height: 48px;
+  margin: 0 auto 50px auto;
+  width: 70px;
+  @include break-max($mobile) { margin: 0 auto 12px auto; }
+}
+
+i.dribbble {
+  background: url('../img/icon-dribbble.png') no-repeat 0 0;
+  display: block;
+  height: 54px;
+  margin: 0 auto 50px auto;
+  width: 54px;
+  @include break-max($mobile) { margin: 0 auto 12px auto; }
+}
+
+i.github {
+  background: url('../img/icon-github.png') no-repeat 0 0;
+  display: block;
+  height: 53px;
+  margin: 0 auto 50px auto;
+  width: 53px;
+  @include break-max($mobile) { margin: 0 auto 12px auto; }
+}
+
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+
+
+img { border: 0; vertical-align: middle; }
+
+svg:not(:root) { overflow: hidden; }
+
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+
+
+figure { margin: 0; }
+
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+
+fieldset { border: 0; margin: 0; padding: 0; }
+legend { border: 0; padding: 0; }
+
+button, input, select, textarea { font-family: inherit; font-size: 100%; margin: 0; }
+button, input { line-height: normal; }
+button, select { text-transform: none; }
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button[disabled], html input[disabled] { cursor: default; }
+
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; }
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+textarea { overflow: auto; resize: vertical; vertical-align: top; }
+
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+
+table { border-collapse: collapse; border-spacing: 0; }
+
+
+/* ==========================================================================
+   Common
+   ========================================================================== */
+
+
+.no-mobile {
+  @include break-max($mobile) { display: none; }
+}
